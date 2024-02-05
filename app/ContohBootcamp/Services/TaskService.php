@@ -3,6 +3,7 @@
 namespace App\ContohBootcamp\Services;
 
 use App\ContohBootcamp\Repositories\TaskRepository;
+use MongoDB\Operation\Delete;
 
 class TaskService {
 	private TaskRepository $taskRepository;
@@ -55,5 +56,13 @@ class TaskService {
 
 		$id = $this->taskRepository->save( $editTask);
 		return $id;
+	} 
+
+	/**
+	 * NOTE: untuk delete task
+	 */
+	public function deleteTask(string $taskId): void
+	{
+		$this->taskRepository->deleteById($taskId);
 	}
 }
