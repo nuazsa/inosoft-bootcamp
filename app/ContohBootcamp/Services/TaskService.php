@@ -54,15 +54,63 @@ class TaskService {
 			$editTask['description'] = $formData['description'];
 		}
 
-		$id = $this->taskRepository->save( $editTask);
+		if (isset($formData['assigned'])) {
+			$editTask['assigned'] = $formData['assigned'];
+		}
+
+		$id = $this->taskRepository->save($editTask);
 		return $id;
 	} 
 
 	/**
 	 * NOTE: untuk delete task
 	 */
-	public function deleteTask(string $taskId): void
+	public function deleteTask(string $taskId)
 	{
+		$existTask = $this->getById($taskId);
+
+		if(!$existTask)
+		{
+			return response()->json([
+				"message"=> "Task ".$taskId." tidak ada"
+			], 401);
+		}
+
 		$this->taskRepository->deleteById($taskId);
+	}
+
+	/**
+	 * NOTE: untuk assignTask task
+	 */
+	public function assignTask(string $taskId, array $formData)
+	{
+		$existTask = $this->getById($taskId);
+	
+		if (!$existTask) {
+			return response()->json([
+				"message" => "Task " . $taskId . " tidak ada"
+			], 401);
+		}
+	
+		$this->updateTask($existTask, $formData);
+	}
+
+	public function unassignTask(string $taskId)
+	{
+		$existTask = $this->getById($taskId);
+
+		if(!$existTask)
+		{
+			return response()->json([
+				"message"=> "Task ".$taskId." tidak ada"
+			], 401);
+		}
+
+		$existTask['assigned'] = null;
+		$formData = $existTask;
+
+		$this->updateTask($existTask, $formData);
+
+		return $existTask;
 	}
 }
