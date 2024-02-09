@@ -5,10 +5,12 @@ namespace App\ContohBootcamp\Services;
 use App\ContohBootcamp\Repositories\TaskRepository;
 use MongoDB\Operation\Delete;
 
-class TaskService {
+class TaskService
+{
 	private TaskRepository $taskRepository;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->taskRepository = new TaskRepository();
 	}
 
@@ -44,13 +46,11 @@ class TaskService {
 	 */
 	public function updateTask(array $editTask, array $formData)
 	{
-		if(isset($formData['title']))
-		{
+		if (isset($formData['title'])) {
 			$editTask['title'] = $formData['title'];
 		}
 
-		if(isset($formData['description']))
-		{
+		if (isset($formData['description'])) {
 			$editTask['description'] = $formData['description'];
 		}
 
@@ -60,7 +60,7 @@ class TaskService {
 
 		$id = $this->taskRepository->save($editTask);
 		return $id;
-	} 
+	}
 
 	/**
 	 * NOTE: untuk delete task
@@ -69,10 +69,9 @@ class TaskService {
 	{
 		$existTask = $this->getById($taskId);
 
-		if(!$existTask)
-		{
+		if (!$existTask) {
 			return response()->json([
-				"message"=> "Task ".$taskId." tidak ada"
+				"message" => "Task " . $taskId . " tidak ada"
 			], 401);
 		}
 
@@ -85,13 +84,13 @@ class TaskService {
 	public function assignTask(string $taskId, array $formData)
 	{
 		$existTask = $this->getById($taskId);
-	
+
 		if (!$existTask) {
 			return response()->json([
 				"message" => "Task " . $taskId . " tidak ada"
 			], 401);
 		}
-	
+
 		$this->updateTask($existTask, $formData);
 	}
 
@@ -99,10 +98,9 @@ class TaskService {
 	{
 		$existTask = $this->getById($taskId);
 
-		if(!$existTask)
-		{
+		if (!$existTask) {
 			return response()->json([
-				"message"=> "Task ".$taskId." tidak ada"
+				"message" => "Task " . $taskId . " tidak ada"
 			], 401);
 		}
 
@@ -112,5 +110,54 @@ class TaskService {
 		$this->updateTask($existTask, $formData);
 
 		return $existTask;
+	}
+
+	public function createSubtask(string $taskId, array $data)
+	{
+		$existTask = $this->getById($taskId);
+
+		if (!$existTask) {
+			return response()->json([
+				"message" => "Task " . $taskId . " tidak ada"
+			], 401);
+		}
+
+		$subtasks = isset($existTask['subtasks']) ? $existTask['subtasks'] : [];
+		$subtasks[] = [
+			'_id' => (string) new \MongoDB\BSON\ObjectId(),
+			'title' => $data['title'],
+			'description' => $data['description'],
+		];
+
+		$existTask['subtasks'] = $subtasks;
+
+		$this->taskRepository->save($existTask);
+	}
+
+	public function deleteSubTask(string $taskId, string $subtaskId)
+	{
+		$existTask = $this->taskRepository->getById($taskId);
+		if(!$existTask)
+		{
+			return response()->json([
+				"message"=> "Task ".$taskId." tidak ada"
+			], 401);
+		}
+
+		$subtasks = isset($existTask['subtasks']) ? $existTask['subtasks'] : [];
+
+		// Pencarian dan penghapusan subtask
+		$subtasks = array_filter($subtasks, function($subtask) use($subtaskId) {
+			if($subtask['_id'] == $subtaskId)
+			{
+				return false;
+			} else {
+				return true;
+			}
+		});
+		$subtasks = array_values($subtasks);
+		$existTask['subtasks'] = $subtasks;
+
+		$this->taskRepository->save($existTask);
 	}
 }

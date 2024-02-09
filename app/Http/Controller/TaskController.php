@@ -112,7 +112,6 @@ class TaskController extends Controller {
 	// TODO: createSubtask()
 	public function createSubtask(Request $request)
 	{
-		$mongoTasks = new MongoModel('tasks');
 		$request->validate([
 			'task_id'=>'required',
 			'title'=>'required|string',
@@ -120,39 +119,21 @@ class TaskController extends Controller {
 		]);
 
 		$taskId = $request->post('task_id');
-		$title = $request->post('title');
-		$description = $request->post('description');
 
-		$existTask = $mongoTasks->find(['_id'=>$taskId]);
-
-		if(!$existTask)
-		{
-			return response()->json([
-				"message"=> "Task ".$taskId." tidak ada"
-			], 401);
-		}
-
-		$subtasks = isset($existTask['subtasks']) ? $existTask['subtasks'] : [];
-
-		$subtasks[] = [
-			'_id'=> (string) new \MongoDB\BSON\ObjectId(),
-			'title'=>$title,
-			'description'=>$description
+		$data = [
+			'title' => $request->post('title'),
+			'description' => $request->post('description'),
 		];
 
-		$existTask['subtasks'] = $subtasks;
+		$this->taskService->createSubtask($taskId, $data);
 
-		$mongoTasks->save($existTask);
-
-		$task = $mongoTasks->find(['_id'=>$taskId]);
-
+		$task = $this->taskService->getById($taskId);
 		return response()->json($task);
 	}
 
 	// TODO deleteSubTask()
 	public function deleteSubtask(Request $request)
 	{
-		$mongoTasks = new MongoModel('tasks');
 		$request->validate([
 			'task_id'=>'required',
 			'subtask_id'=>'required'
@@ -161,33 +142,9 @@ class TaskController extends Controller {
 		$taskId = $request->post('task_id');
 		$subtaskId = $request->post('subtask_id');
 
-		$existTask = $mongoTasks->find(['_id'=>$taskId]);
+		$this->taskService->deleteSubTask($taskId, $subtaskId);
 
-		if(!$existTask)
-		{
-			return response()->json([
-				"message"=> "Task ".$taskId." tidak ada"
-			], 401);
-		}
-
-		$subtasks = isset($existTask['subtasks']) ? $existTask['subtasks'] : [];
-
-		// Pencarian dan penghapusan subtask
-		$subtasks = array_filter($subtasks, function($subtask) use($subtaskId) {
-			if($subtask['_id'] == $subtaskId)
-			{
-				return false;
-			} else {
-				return true;
-			}
-		});
-		$subtasks = array_values($subtasks);
-		$existTask['subtasks'] = $subtasks;
-
-		$mongoTasks->save($existTask);
-
-		$task = $mongoTasks->find(['_id'=>$taskId]);
-
+		$task = $this->taskService->getById($taskId);
 		return response()->json($task);
 	}
 

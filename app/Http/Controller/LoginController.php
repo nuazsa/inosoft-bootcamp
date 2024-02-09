@@ -2,9 +2,9 @@
 
 namespace App\ContohBootcamp\Controllers;
 
-use App\ContohBootcamp\Models\User;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 

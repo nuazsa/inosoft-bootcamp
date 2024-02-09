@@ -1,7 +1,9 @@
 <?php
+
 namespace App\ContohBootcamp\Repositories;
 
 use App\Helpers\MongoModel;
+use Illuminate\Support\Arr;
 
 class TaskRepository
 {
@@ -25,7 +27,7 @@ class TaskRepository
 	 *  */
 	public function getById(string $id)
 	{
-		$task = $this->tasks->find(['_id'=>$id]);
+		$task = $this->tasks->find(['_id' => $id]);
 		return $task;
 	}
 
@@ -35,11 +37,11 @@ class TaskRepository
 	public function create(array $data)
 	{
 		$dataSaved = [
-			'title'=>$data['title'],
-			'description'=>$data['description'],
-			'assigned'=>null,
-			'subtasks'=> [],
-			'created_at'=>time()
+			'title' => $data['title'],
+			'description' => $data['description'],
+			'assigned' => null,
+			'subtasks' => [],
+			'created_at' => time()
 		];
 
 		$id = $this->tasks->save($dataSaved);
