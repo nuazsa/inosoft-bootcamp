@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c9662cf2-2893-4f63-8dc7-5e65ba0addfc",
+		"_postman_id": "d64ea136-137a-4c34-8167-cf9a0dd2ada9",
 		"name": "Bootcamp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18557314"
+		"_exporter_id": "25466258"
 	},
 	"item": [
 		{
@@ -12,15 +12,15 @@
 				{
 					"name": "Show Tasks",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8001/task/show_tasks",
+							"raw": "http://localhost:8000/task/show_tasks",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"show_tasks"
@@ -44,12 +44,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/create_task",
+							"raw": "http://localhost:8000/task/create_task",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"create_task"
@@ -61,11 +61,11 @@
 				{
 					"name": "Update Task",
 					"request": {
-						"method": "POST",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": \"632ad8d8e72b0000460010c5\",\r\n    \"title\": \"Ini task 1\",\r\n    \"description\": \"Deskripsi task 1 berhasil diperbarui\"\r\n}",
+							"raw": "{\r\n    \"task_id\": \"65c5ebfaf136000036000a72\",\r\n    \"title\": \"Ini task 1\",\r\n    \"description\": \"Deskripsi task 1 berhasil diperbarui\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,12 +73,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/update_task",
+							"raw": "http://localhost:8000/task/update_task",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"update_task"
@@ -94,7 +94,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": \"632ad8d8e72b0000460010c5\",\r\n    \"assigned\": \"Jacky\"\r\n}",
+							"raw": "{\r\n    \"task_id\": \"65c5ebfaf136000036000a72\",\r\n    \"assigned\": \"Jacky\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -102,12 +102,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/assign_task",
+							"raw": "http://localhost:8000/task/assign_task",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"assign_task"
@@ -119,11 +119,11 @@
 				{
 					"name": "Unassign Task",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": \"632ad8d8e72b0000460010c5\"\r\n}",
+							"raw": "{\r\n    \"task_id\": \"65c5ebfaf136000036000a72\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,12 +131,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/unassign_task",
+							"raw": "http://localhost:8000/task/unassign_task",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"unassign_task"
@@ -160,12 +160,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/create_subtask",
+							"raw": "http://localhost:8000/task/create_subtask",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"create_subtask"
@@ -177,11 +177,11 @@
 				{
 					"name": "Delete Subtask",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": \"632ad8d8e72b0000460010c5\",\r\n    \"subtask_id\":\"632ad99ae72b0000460010c6\"\r\n}",
+							"raw": "{\r\n    \"task_id\": \"65c5ebfaf136000036000a72\",\r\n    \"subtask_id\":\"65c5f69cf136000036000a79\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -189,12 +189,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/delete_subtask",
+							"raw": "http://localhost:8000/task/delete_subtask",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"delete_subtask"
@@ -206,11 +206,11 @@
 				{
 					"name": "Delete Task",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": \"632ad8d8e72b0000460010c5\"\r\n}",
+							"raw": "{\r\n    \"task_id\": \"65c5f436f136000036000a78\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -218,12 +218,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/task/delete_task",
+							"raw": "http://localhost:8000/task/delete_task",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8001",
+							"port": "8000",
 							"path": [
 								"task",
 								"delete_task"
